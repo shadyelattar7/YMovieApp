@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MoviesListViewModel.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -18,7 +18,6 @@ public final class MoviesListViewModel: ObservableObject {
     // MARK: Private properties
     private let cancelBag: CancelBag
     private var currentPage = 1
-    private var currentSort: MoviesSortingType = .popularity
     
     // MARK: Public properties
     @Published public var movies: [MovieAdapter] = []
@@ -54,33 +53,22 @@ extension MoviesListViewModel {
         loadMovies()
     }
     
-    func loadAllSortTypes() -> [MoviesSortingType] {
-        return MoviesSortingType.allCases
+    func numberOfMovies() -> Int {
+        return movies.count
     }
 }
 
 // MARK: - Actions
 extension MoviesListViewModel {
     enum Actions {
-        case sort(MoviesSortingType)
         case openMovieDetails(MovieAdapter)
     }
     
     func handleAction(_ action: Actions) {
         switch action {
-        case .sort(let value):
-            handleSortingAction(value)
         case .openMovieDetails(let adapter):
             handleOpenMovieDetailsAction(adapter)
         }
-    }
-    
-    private func handleSortingAction(_ sort: MoviesSortingType) {
-        guard sort != currentSort else { return }
-        movies.removeAll()
-        currentSort = sort
-        currentPage = 1
-        loadMovies()
     }
     
     private func handleOpenMovieDetailsAction(_ adapter: MovieAdapter) {
@@ -93,8 +81,7 @@ extension MoviesListViewModel {
     public func loadMovies() {
         moviesUseCase
             .getMovies(
-                page: currentPage,
-                sortType: currentSort
+                page: currentPage
             )
             .receive(on: RunLoop.main)
             .toResult()
@@ -116,8 +103,19 @@ extension MoviesListViewModel {
         movies.append(contentsOf: response.results.compactMap {
             MovieAdapter($0, baseImageURL: imageBaseURL)
         })
+        
+        print("VMConut: \(numberOfMovies())")
     }
 }
+
+// MARK: - configration Cell
+extension MoviesListViewModel {
+    func configrationCell( _ cell : MovieCell , index : Int){
+        let modelOfCell = movies[index]
+        cell.configuration(viewModel: modelOfCell)
+    }
+}
+
 
 // MARK: - Navigation
 extension MoviesListViewModel {

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MoviesRepository.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -26,14 +26,12 @@ public final class MoviesRepository {
 // MARK: - MoviesRepositoryProtocol
 extension MoviesRepository: MoviesRepositoryProtocol {
     public func getMovies(
-        page: Int,
-        sortType: MoviesSortingType
+        page: Int
     ) -> AnyPublisher<MoviesListEntity, Error> {
         netWork.send(
             MoviesListEntity.self,
             endpoint: MoviesEndpoint.getMovies(
-                page: page,
-                sortType: sortType.apiValue
+                page: page
             )
         )
     }

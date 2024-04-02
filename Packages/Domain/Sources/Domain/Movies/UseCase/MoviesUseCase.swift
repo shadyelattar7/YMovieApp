@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MoviesUseCaseProtocol.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -17,8 +17,7 @@ public protocol MoviesUseCaseProtocol {
     ///   - sortType: The sorting type to apply to the movie list.
     /// - Returns: A Combine `AnyPublisher` that emits a `MoviesListEntity` or an error.
     func getMovies(
-        page: Int,
-        sortType: MoviesSortingType
+        page: Int
     ) -> AnyPublisher<MoviesListEntity, Error>
     
     /// Retrieves detailed information for a specific movie.
@@ -48,11 +47,9 @@ public final class MoviesUseCase {
 // MARK: - MoviesUseCaseProtocol
 extension MoviesUseCase: MoviesUseCaseProtocol {
     public func getMovies(
-        page: Int,
-        sortType: MoviesSortingType
+        page: Int
     ) -> AnyPublisher<MoviesListEntity, Error> {
-        repository.getMovies(page: page,
-                             sortType: sortType)
+        repository.getMovies(page: page)
     }
     
     public func getMovieDetails(

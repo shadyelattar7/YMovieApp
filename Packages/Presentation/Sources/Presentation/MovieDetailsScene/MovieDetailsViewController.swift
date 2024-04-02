@@ -1,6 +1,6 @@
 //
 //  MovieDetailsViewController.swift
-//  
+//
 //
 //  Created by Al-attar on 01/04/2024.
 //
@@ -20,6 +20,7 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var movieNameLabel: UILabel!
     @IBOutlet weak var movieDetailsLabel: UILabel!
     @IBOutlet weak var imageActivityIndecator: UIActivityIndicatorView!
+    @IBOutlet weak var backButton: UIButton!
     
     // MARK: Data
     public var movieAdapter: MovieAdapter? = nil
@@ -29,6 +30,17 @@ class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         loadViewData()
+        setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
     }
     
     private func loadViewData() {
@@ -47,5 +59,16 @@ class MovieDetailsViewController: UIViewController {
             backgroundImageView.image = image
             movieImageView.image = image
         }
+    }
+    
+    private func setupUI() {
+        let icon = UIImage(named: "left-arrow", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        backButton.setImage(icon, for: .normal)
+    }
+    
+    //MARK: - Action
+    
+    @IBAction func backTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

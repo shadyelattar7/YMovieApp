@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MoviesEndpoint.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -9,7 +9,7 @@ import Foundation
 import CoreNetwork
 
 public enum MoviesEndpoint {
-    case getMovies(page: Int, sortType: String)
+    case getMovies(page: Int)
     case getMoviesDetails(movieId: Int)
 }
 
@@ -41,10 +41,9 @@ extension MoviesEndpoint: HTTPEndpoint {
     
     public var queryParameters: [URLQueryItem]? {
         switch self {
-        case .getMovies(let page, let sortType):
+        case .getMovies(let page):
             var customeQueries = [
-                URLQueryItem(name: "page", value: "\(page)"),
-                URLQueryItem(name: "sort_by", value: sortType)
+                URLQueryItem(name: "page", value: "\(page)")
             ]
             customeQueries.append(contentsOf: CommonMovieService.queryItems)
             return customeQueries

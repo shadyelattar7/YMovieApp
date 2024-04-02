@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MovieAdapter.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -7,6 +7,7 @@
 
 import Foundation
 import Domain
+import Extensions
 
 public struct MovieAdapter: Identifiable, Hashable {
     
@@ -17,6 +18,8 @@ public struct MovieAdapter: Identifiable, Hashable {
     public let overview: String
     public let posterTiny: String
     public let posterOriginal: String
+    public let voteAverage: Double
+    public let releaseDate: String?
 }
 
 // MARK: - Initialization from entities
@@ -44,6 +47,8 @@ extension MovieAdapter {
             path: movie.posterPath,
             size: .original
         )
+        self.voteAverage = (movie.voteAverage * 10).rounded() / 10
+        self.releaseDate = movie.releaseDate?.extractYear()
     }
     
     private static func generatePosterLink(
@@ -63,7 +68,9 @@ extension MovieAdapter {
             title: "Movie Name",
             overview: "Movie OverView, Movie OverView, Movie OverView, Movie OverView, Movie OverView.",
             posterTiny: "Image Poster Path URL",
-            posterOriginal: "Image Poster Path URL"
+            posterOriginal: "Image Poster Path URL",
+            voteAverage: 6.9,
+            releaseDate: "1994"
         )
     }
 }

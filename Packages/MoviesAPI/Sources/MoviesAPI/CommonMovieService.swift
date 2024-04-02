@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CommonMovieService.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -17,7 +17,6 @@ public enum CommonMovieService {
     public static var baseURL: String {
         let apiBaseURL: String = AppEnvironment.current.getValue(.apiBaseURL)
         let apiVersion: String = AppEnvironment.current.getValue(.apiVersion)
-        print("https://\(apiBaseURL)/\(apiVersion)")
         return "https://\(apiBaseURL)/\(apiVersion)"
     }
     

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MoviesRepositoryProtocol.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -19,8 +19,7 @@ public protocol MoviesRepositoryProtocol {
     ///   - sortType: The sorting type to apply to the movie list.
     /// - Returns: A Combine `AnyPublisher` that emits a `MoviesListEntity` or an error.
     func getMovies(
-        page: Int,
-        sortType: MoviesSortingType
+        page: Int
     ) -> AnyPublisher<MoviesListEntity, Error>
     
     /// Retrieves a list of movies from a remote data source.

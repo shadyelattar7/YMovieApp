@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MoviesListBuilder.swift
 //  
 //
 //  Created by Al-attar on 01/04/2024.
@@ -18,12 +18,17 @@ public struct MoviesListBuilder {
         environment: AppEnvironmentProtocol,
         navigationHandler: @escaping MoviesListViewModel.NavigationActionHandler
     ) -> UIViewController {
+        let view = MovieListViewController.init(
+            nibName: MovieListViewController.Identifier,
+            bundle: Bundle.module
+        )
         let viewModel = MoviesListViewModel(
             moviesUseCase: moviesUseCase,
             environment: environment,
             navigationHandler: navigationHandler
         )
-        let view = MoviesListView(viewModel: viewModel)
-        return UIHostingController(rootView: view)
+        view.configure(with: viewModel)
+        return view
     }
 }
+
